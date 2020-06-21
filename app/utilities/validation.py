@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 class ValidationUtilities:
     def is_valid_email(string):
@@ -20,3 +21,11 @@ class ValidationUtilities:
             return False
         
         return True
+
+    def is_valid_datetime_string(string):
+        try:
+            datetime.strptime(string, '%Y-%m-%d')
+            return True
+        except:
+            return False
+

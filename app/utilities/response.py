@@ -36,4 +36,4 @@ class ResponseUtilities:
     
     
     def http_unsupported_media_type(status='error', message='Unsupported Media Type'):
-        return jsonify({'status': status, 'code': 415, 'message': message}), 405
+        return jsonify({'status': status, 'code': 415, 'message': message}), 415

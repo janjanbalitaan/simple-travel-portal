@@ -18,5 +18,5 @@ from app.models.user import User
 User.create_user(email="admin@company.com", role=1, password=User.generate_password('p@ssw0rd'), status=1, first_name='Juan', last_name='Dela Cruz', uid=User.generate_uid())
 User.create_user(email="finance_manager@company.com", role=2, password=User.generate_password('p@ssw0rd'), status=1, first_name='Josefina', last_name='Quezon', uid=User.generate_uid())
 User.create_user(email="manager@company.com", role=3, password=User.generate_password('p@ssw0rd'), status=1, first_name='Josefina', last_name='Quezon', uid=User.generate_uid())
-User.create_user(email="employee@company.com", role=3, password=User.generate_password('p@ssw0rd'), status=1, first_name='Josefina', last_name='Quezon', uid=User.generate_uid())
+User.create_user(email="employee@company.com", role=4, password=User.generate_password('p@ssw0rd'), status=1, first_name='Josefina', last_name='Quezon', uid=User.generate_uid())
 
