@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Administrator - Dashboard</title>
+
+  <link rel="shortcut icon" type="image/png" href="/static/img/moneygment-mpp-dashboard-fav-icon.png"/>
+
+  <!-- Custom fonts for this template-->
+  <link href="/static/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="/static/css/main.min.css" rel="stylesheet">
+  <link href="/static/css/progress.css" rel="stylesheet">
+  <link href="/static/css/progress-library.min.css" rel="stylesheet">
+  <link href="/static/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="/static/css/buttons.dataTables.min.css" rel="stylesheet">
+
+  <link href="/static/css/select2.min.css" rel="stylesheet" />
+
+</head>
+
+<body id="page-top">
+
+  <div class="progress-container">
+
+  	<svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+  		 <circle cx="170" cy="170" r="160" stroke="#E2007C"/>
+  		 <circle cx="170" cy="170" r="135" stroke="#404041"/>
+  		 <circle cx="170" cy="170" r="110" stroke="#E2007C"/>
+  		 <circle cx="170" cy="170" r="85" stroke="#404041"/>
+  	</svg>
+
+  </div>
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">MD Panel</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Profile -->
+      <li class="nav-item active">
+        <a class="nav-link" href="/administrator/profile">
+          <i class="fas fa-fw fa-user-alt"></i>
+          <span>Profile</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="/administrator/dashboard">
+          <i class="fas fa-fw fa-chart-bar"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Transactions
+      </div>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-gem"></i>
+          <span>MPP</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">MPP Components:</h6>
+            <a class="collapse-item" href="/administrator/mpp/dashboard">Dashboard</a>
+            <a class="collapse-item" href="/administrator/mpp/charts">Charts</a>
+            <a class="collapse-item" href="/administrator/mpp/analytics">Analytical Data</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <li class="nav-item">
+        <a class="nav-link" href="#" aria-expanded="true" aria-controls="collapseTwo" data-toggle="modal" data-target="#logoutModal">
+          <i class="fas fa-fw fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">MPP Analytical Data</h1>
+          </div>
+
+          <!-- DataTales Example -->
+          <div id="mpp-month-transactions" class="card shadow mb-4">
+            <!-- <div id="mpp-month-transactions" class="card shadow mb-4  ld-over running"> -->
+            <img id="mpp-month-transactions-loader" src="/static/svg/progress-dual-v1.svg" class="ld" style="font-size:5em;"></img>
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Transactions</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h6 class="m-0 font-weight-bold text-primary">Filters (if the field is blank. It will not be included in the filter)</h6>
+                </div>
+
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="filter-transaction-id">Transaction ID</label>
+                    <input type="text" id="filter-transaction-id" class="form-control form-control-user" name="transaction_id" />
+                  </div>
+
+                </div>
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="filter-prn">PRN</label>
+                    <input type="text" id="filter-prn" class="form-control form-control-user" name="prn" />
+                  </div>
+
+                </div>
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="filter-member-name">Member Name</label>
+                    <input type="text" id="filter-member-name" class="form-control form-control-user" name="member_name" />
+                  </div>
+
+                </div>
+
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="filter-sss-number">SSS Number</label>
+                    <input type="text" id="filter-sss-number" class="form-control form-control-user" name="sss_number" />
+                  </div>
+
+                </div>
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="filter-start">Start Date</label>
+                    <input type="date" class="form-control form-control-user" id="filter-start-date">
+                  </div>
+
+                </div>
+
+                <div class="col-lg-2">
+
+                  <div class="form-group">
+                    <label for="filter-end-date">End Date</label>
+                    <input type="date" class="form-control form-control-user" id="filter-end-date">
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="row">
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="filter-merchant">Merchant</label>
+                    <input type="text" id="filter-merchant" class="form-control form-control-user" name="merchant" />
+                  </div>
+
+                </div>
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="filter-payor">Payor Type</label>
+                    <select id="filter-payor" class="status-select-2 form-control form-control-user" name="payor[]" multiple="multiple">
+                        <option value="ofw">OFW</option>
+                        <option value="self-employed">Self-Employed</option>
+                        <option value="voluntary">Voluntary</option>
+                      </select>
+                  </div>
+
+                </div>
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="filter-status">Status</label>
+                    <select id="filter-status" class="status-select-2 form-control form-control-user" name="status[]" multiple="multiple">
+                        <option value="encoded">Encoded</option>
+                        <option value="voided">Voided</option>
+                        <option value="paid">Paid</option>
+                      </select>
+                  </div>
+
+                </div>
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="filter-sorting">Arrange By (Created)</label>
+                    <select id="filter-sorting" class="form-control form-control-user" name="sorting">
+                        <option value="ascending" selected>Ascending</option>
+                        <option value="descending">Descending</option>
+                      </select>
+                  </div>
+
+                </div>
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="filter-limit">Limit</label>
+                    <select id="filter-limit" class="form-control form-control-user" name="limit">
+                        <option value="10" selected>10</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="1000">1000</option>
+                        <option value="5000">5000</option>
+                        <option value="all">No Limit</option>
+                      </select>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="btn-filter-reset"></label>
+                    <a href="#" id="btn-filter-reset" class="btn btn-danger form-control">
+                      Reset
+                    </a>
+                  </div>
+                </div>
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="btn-filter"></label>
+                    <a href="/administrator/mpp/analytics" id="btn-filter" class="btn btn-primary form-control">
+                      Filter
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <table id="mpp-month-transactions-table" class="table table-bordered table-responsive" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Encoded Date</th>
+                      <th>Payment Date</th>
+                      <th>Merchant</th>
+                      <th>Transaction ID</th>
+                      <th>PRN</th>
+                      <th>Member Name</th>
+                      <th>SSS Number</th>
+                      <th>Payor Type</th>
+                      <th>Coverage</th>
+                      <th>Amount</th>
+                      <th>Flexi Fund</th>
+                      <th>Merchant Fee</th>
+                      <th>Service Fee</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="mpp-month-transactions-tbody">
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Moneygment Dashboard 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" id="btn-logout" href="/login">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/static/js/jquery.min.js"></script>
+
+  <script type="text/javascript">
+    $(".wrapper").hide();
+    $(document).ready(function() {
+      $( ".progress-container" ).hide();
+      $( ".wrapper" ).show();
+      $('.status-select-2').select2();
+    });
+  </script>
+
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/static/js/jquery.easing.min.js"></script>
+  <script src="/static/js/js.cookie.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/static/js/main.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="/static/js/jquery.dataTables.min.js"></script>
+  <script src="/static/js/dataTables.bootstrap4.min.js"></script>
+
+  <script src="/static/js/dataTables.buttons.min.js"></script>
+  <script src="/static/js/buttons.flash.min.js"></script>
+  <script src="/static/js/jszip.min.js"></script>
+  <script src="/static/js/pdfmake.min.js"></script>
+  <script src="/static/js/vfs_fonts.js"></script>
+  <script src="/static/js/buttons.html5.min.js"></script>
+  <script src="/static/js/buttons.print.min.js"></script>
+
+  <script src="/static/js/select2.min.js"></script>
+
+  <script src="/static/js/constants.js"></script>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+        if(Cookies.get("moneygment-dashboard-token") != undefined){
+          if(Cookies.get("moneygment-dashboard-role") == 1){
+            window.location = "/user/dashboard";
+          }else if(Cookies.get("moneygment-dashboard-role") == 2){
+
+          }else{
+            window.location = "/login";
+          }
+        }else{
+          window.location = "/login";
+        }
+
+        $('#mpp-month-transactions-loader').hide();
+        $('#mpp-month-transactions').removeClass('ld-over running');
+
+
+        $( ".progress-container" ).hide();
+        $( ".container" ).show();
+
+      });
+
+      $(function(){
+
+            var mpp_table = $('#mpp-month-transactions-table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+          $("#logout").on("click", function(e){
+              $( ".progress-container" ).show();
+              $( ".wrapper" ).hide();
+              window.location = "/login";
+          });
+
+          $("#btn-filter-reset").on("click", function(e){
+              e.preventDefault();
+              $('#filter-transaction-id').val('');
+              $('#filter-prn').val('');
+              $('#filter-member-name').val('');
+              $('#filter-sss-number').val('');
+              $('#filter-merchant').val('');
+              $('#filter-status').val('');
+              $('#filter-sorting').val('ascending');
+              $('#filter-limit').val('10');
+              $('#filter-payor').val('');
+              $('#filter-start-date').val('');
+              $('#filter-end-date').val('');
+
+          });
+
+          $("#btn-filter").on("click", function(e){
+              e.preventDefault();
+              var payor_type = '';
+              if($('#filter-payor').val() != null){
+                payor_type = $('#filter-payor').val().join(',');
+              }
+
+              var status = '';
+              if($('#filter-status').val() != null){
+                status = $('#filter-status').val().join(',');
+              }
+
+
+              getMPPTotalTransactionsListCurrentMonth(
+                '',
+                $('#filter-transaction-id').val(),
+                $('#filter-prn').val(),
+                $('#filter-member-name').val(),
+                $('#filter-sss-number').val(),
+                $('#filter-merchant').val(),
+                $('#filter-sorting').val(),
+                $('#filter-limit').val(),
+                status,
+                payor_type ,
+                $('#filter-start-date').val(),
+                $('#filter-end-date').val()
+              );
+
+          });
+
+          function getMPPTotalTransactionsListCurrentMonth(code, transaction_id, prn, member_name, sss_number, merchant, sorting, limit, status, payor, start_date, end_date){
+		  mpp_table.clear().draw();
+            $('#mpp-month-transactions-loader').show();
+            $('#mpp-month-transactions').addClass('ld-over running');
+              if(code == "all"){
+                $.ajax(
+                      {
+                          url: base_url + 'api/transactions/mpp',
+                          type: 'get',
+                          contentType: 'application/json',
+                          headers: {
+                            'Authorization': 'Bearer ' + Cookies.get("moneygment-dashboard-token")
+                          },
+                          data: {
+                            'code': 'DTL',
+                            'get': code
+                          },
+                          success: function(data){
+                            if(data.status == "success"){
+                              $("#mpp-month-transactions-date").html(data.data.month + ' ' + data.data.year);
+                              for(i = 0; i < data.data.transactions.length; i++){
+                                mpp_table.row.add([
+                                  data.data.transactions[i].encoded_date,
+                                  data.data.transactions[i].payment_date,
+                                  data.data.transactions[i].merchant_name,
+                                  data.data.transactions[i].reference_number,
+                                  data.data.transactions[i].merchant_identifier,
+                                  data.data.transactions[i].member_name,
+                                  data.data.transactions[i].sss_number,
+                                  data.data.transactions[i].payor_type,
+                                  data.data.transactions[i].coverage,
+                                  number_format(data.data.transactions[i].amount),
+                                  number_format(data.data.transactions[i].flexi_fund),
+                                  number_format(data.data.transactions[i].merchant_fee),
+                                  number_format(data.data.transactions[i].service_fee)
+                                ]).draw();
+                              }
+                              $('#mpp-month-transactions-loader').hide();
+                              $('#mpp-month-transactions').removeClass('ld-over running');
+
+                            }else{
+                              $("#mpp-month-transactions-date").html("N/A");
+
+                              $("#mpp-month-transactions-tbody").html("");
+
+                              $('#mpp-month-transactions-loader').hide();
+                              $('#mpp-month-transactions').removeClass('ld-over running');
+                            }
+                          },
+                          error: function(data){
+                            $("#mpp-month-transactions-date").html("N/A");
+
+                            $("#mpp-month-transactions-tbody").html("");
+
+                            $('#mpp-month-transactions-loader').hide();
+                            $('#mpp-month-transactions').removeClass('ld-over running');
+                          }
+                    }
+                );
+              }else{
+                $.ajax(
+                      {
+                          url: base_url + 'api/transactions/mpp',
+                          type: 'get',
+                          contentType: 'application/json',
+                          headers: {
+                            'Authorization': 'Bearer ' + Cookies.get("moneygment-dashboard-token")
+                          },
+                          data: {
+                            'code': 'DTL',
+                            'get': code,
+                            'transaction_id': transaction_id,
+                            'prn': prn,
+                            'member_name': member_name,
+                            'sss_number': sss_number,
+                            'merchant_name': merchant,
+                            'sorting': sorting,
+                            'limit': limit,
+                            'status': status,
+                            'payor': payor,
+                            'start_date': start_date,
+                            'end_date': end_date
+                          },
+                          success: function(data){
+                            if(data.status == "success"){
+                              $("#mpp-month-transactions-date").html(data.data.month + ' ' + data.data.year);
+                              for(i = 0; i < data.data.transactions.length; i++){
+                                mpp_table.row.add([
+                                  data.data.transactions[i].encoded_date,
+                                  data.data.transactions[i].payment_date,
+                                  data.data.transactions[i].merchant_name,
+                                  data.data.transactions[i].reference_number,
+                                  data.data.transactions[i].merchant_identifier,
+                                  data.data.transactions[i].member_name,
+                                  data.data.transactions[i].sss_number,
+                                  data.data.transactions[i].payor_type,
+                                  data.data.transactions[i].coverage,
+                                  number_format(data.data.transactions[i].amount),
+                                  number_format(data.data.transactions[i].flexi_fund),
+                                  number_format(data.data.transactions[i].merchant_fee),
+                                  number_format(data.data.transactions[i].service_fee),
+                                  data.data.transactions[i].status
+                                ]).draw();
+                              }
+                              $('#mpp-month-transactions-loader').remove();
+                              $('#mpp-month-transactions').removeClass('ld-over running');
+
+                            }else{
+
+                              $("#mpp-month-transactions-tbody").html("");
+
+                              $('#mpp-month-transactions-loader').remove();
+                              $('#mpp-month-transactions').removeClass('ld-over running');
+                            }
+                          },
+                          error: function(data){
+
+                            $("#mpp-month-transactions-tbody").html("");
+
+                            $('#mpp-month-transactions-loader').remove();
+                            $('#mpp-month-transactions').removeClass('ld-over running');
+                          }
+                    }
+                );
+              }
+          }
+
+          function number_format(number, decimals, dec_point, thousands_sep) {
+            // *     example: number_format(1234.56, 2, ',', ' ');
+            // *     return: '1 234,56'
+            number = (number + '').replace(',', '').replace(' ', '');
+            var n = !isFinite(+number) ? 0 : +number,
+              prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+              sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+              dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+              s = '',
+              toFixedFix = function(n, prec) {
+                var k = Math.pow(10, prec);
+                return '' + Math.round(n * k) / k;
+              };
+            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+            if (s[0].length > 3) {
+              s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+            }
+            if ((s[1] || '').length < prec) {
+              s[1] = s[1] || '';
+              s[1] += new Array(prec - s[1].length + 1).join('0');
+            }
+            return s.join(dec);
+          }
+
+      });
+  </script>
+
+</body>
+
+</html>

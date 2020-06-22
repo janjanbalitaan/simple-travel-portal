@@ -1,1 +1,1 @@
-from app.api import user, travel
+from app.api import user, travel, template

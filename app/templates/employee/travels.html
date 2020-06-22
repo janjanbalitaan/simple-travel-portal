@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Employees - Travels</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="/static/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="/static/css/main.min.css" rel="stylesheet">
+  <link href="/static/css/progress.css" rel="stylesheet">
+  <link href="/static/css/progress-library.min.css" rel="stylesheet">
+  <link href="/static/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="/static/css/buttons.dataTables.min.css" rel="stylesheet">
+
+  <link href="/static/css/select2.min.css" rel="stylesheet" />
+
+</head>
+
+<body id="page-top">
+
+  <div class="progress-container">
+
+  	<svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+  		 <circle cx="170" cy="170" r="160" stroke="#E2007C"/>
+  		 <circle cx="170" cy="170" r="135" stroke="#404041"/>
+  		 <circle cx="170" cy="170" r="110" stroke="#E2007C"/>
+  		 <circle cx="170" cy="170" r="85" stroke="#404041"/>
+  	</svg>
+
+  </div>
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Travel Portal</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Profile -->
+      <li class="nav-item active">
+        <a class="nav-link" href="/employee/profile">
+          <i class="fas fa-fw fa-user-alt"></i>
+          <span>Profile</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Modules 
+      </div>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-gem"></i>
+          <span>Travels</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Travels Components:</h6>
+            <a class="collapse-item" href="/employee/travels">List</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <li class="nav-item">
+        <a class="nav-link" href="#" aria-expanded="true" aria-controls="collapseTwo" data-toggle="modal" data-target="#logoutModal">
+          <i class="fas fa-fw fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Employee Travels List</h1>
+          </div>
+
+          <!-- DataTales Example -->
+          <div id="tp-list" class="card shadow mb-4">
+            <img id="tp-list-loader" src="/static/svg/progress-dual-v1.svg" class="ld" style="font-size:5em;"></img>
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">List</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h6 class="m-0 font-weight-bold text-primary">Filters</h6>
+                </div>
+
+              </div>
+
+              <div class="row">
+
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="filter-status">Status</label>
+                    <select id="filter-status" class="status-select-2 form-control form-control-user" name="status">
+                        <option value="">All</option>
+                        <option value="draft">Draft</option>
+                        <option value="submitted">Submitted</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                      </select>
+                  </div>
+
+                </div>
+
+
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label for="btn-filter"></label>
+                    <a href="" id="btn-filter" class="btn btn-primary form-control">
+                      Filter
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+
+
+              <div class="row">
+
+                  <div class="form-group">
+                    <label for="btn-filter"></label>
+                    <a href="#" id="btn-add-new" class="btn btn-primary form-control">
+                     Add new Travel 
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <table id="tp-list-table" class="table table-bordered table-responsive" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Encoded Date</th>
+                      <th>Description</th>
+                      <th>Travel Date</th>
+                      <th>Mode of Travel</th>
+                      <th>Ticket Cost</th>
+                      <th>Airport Cab Cost (home)</th>
+                      <th>Airport Cab Cost (dest)</th>
+                      <th>Hotel Cost</th>
+                      <th>Local Conveyance</th>
+                      <th>Approver</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tp-list-tbody">
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Simple Travel Portal 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Add Modal-->
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Travel</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form id="a-form">
+                <div id="add-message-notification">
+
+                </div>
+                <div class="form-group">
+                  <label for="a-description">Description</label>
+                  <input type="text" class="form-control" id="a-description" placeholder="Enter description">
+                </div>
+                <div class="form-group">
+                  <label for="a-start-date">Start Date</label>
+                  <input type="date" class="form-control" id="a-start-date" placeholder="Enter start date">
+                </div>
+                <div class="form-group">
+                  <label for="a-end-date">End Date</label>
+                  <input type="date" class="form-control" id="a-end-date" placeholder="Enter end date">
+                </div>
+                <div class="form-group">
+                  <label for="a-mode">Mode</label>
+                  <input type="text" class="form-control" id="a-mode" placeholder="Enter mode">
+                </div>
+                <div class="form-group">
+                  <label for="a-ticket-cost">Ticket Cost</label>
+                  <input type="number" class="form-control" id="a-ticket-cost" placeholder="Enter ticket cost">
+                </div>
+                <div class="form-group">
+                  <label for="a-home-airport-cost">Home Airport Cost</label>
+                  <input type="number" class="form-control" id="a-home-airport-cost" placeholder="Enter home cost">
+                </div>
+                <div class="form-group">
+                  <label for="a-dest-airport-cost">Destination Airport Cost</label>
+                  <input type="number" class="form-control" id="a-dest-airport-cost" placeholder="Enter destination cost">
+                </div>
+                <div class="form-group">
+                  <label for="a-hotel-cost">Hotel Cost</label>
+                  <input type="number" class="form-control" id="a-hotel-cost" placeholder="Enter hotel cost">
+                </div>
+                <div class="form-group">
+                  <label for="a-local-conveyance">Local Conveyance</label>
+                  <input type="number" class="form-control" id="a-local-conveyance" placeholder="Enter local conveyance">
+                </div>
+                  <div class="form-group">
+                    <label for="a-approver">Approver</label>
+                    <select id="a-approver" class="select-2 form-control form-control-user" name="approver">
+                      </select>
+                  </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-warning" onclick="onClickBtnAddSaveAsDraft()" type="button" id="btn-save-draft" href="#">Save as Draft</button>
+          <a class="btn btn-primary" onclick="onClickBtnAddSaveAsSubmit()" id="btn-submit" href="#">Submit for Approval</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal-->
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Details</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form id="e-form">
+                <div id="edit-message-notification">
+
+                </div>
+                <input type="hidden" class="form-control" id="e-id">
+                <div class="form-group">
+                  <label for="e-description">Description</label>
+                  <input type="text" class="form-control" id="e-description" placeholder="Enter description">
+                </div>
+                <div class="form-group">
+                  <label for="e-start-date">Start Date</label>
+                  <input type="date" class="form-control" id="e-start-date" placeholder="Enter start date">
+                </div>
+                <div class="form-group">
+                  <label for="e-end-date">End Date</label>
+                  <input type="date" class="form-control" id="e-end-date" placeholder="Enter end date">
+                </div>
+                <div class="form-group">
+                  <label for="e-mode">Mode</label>
+                  <input type="text" class="form-control" id="e-mode" placeholder="Enter mode">
+                </div>
+                <div class="form-group">
+                  <label for="e-ticket-cost">Ticket Cost</label>
+                  <input type="number" class="form-control" id="e-ticket-cost" placeholder="Enter ticket cost">
+                </div>
+                <div class="form-group">
+                  <label for="e-home-airport-cost">Home Airport Cost</label>
+                  <input type="number" class="form-control" id="e-home-airport-cost" placeholder="Enter home cost">
+                </div>
+                <div class="form-group">
+                  <label for="e-dest-airport-cost">Destination Airport Cost</label>
+                  <input type="number" class="form-control" id="e-dest-airport-cost" placeholder="Enter destination cost">
+                </div>
+                <div class="form-group">
+                  <label for="e-hotel-cost">Hotel Cost</label>
+                  <input type="number" class="form-control" id="e-hotel-cost" placeholder="Enter hotel cost">
+                </div>
+                <div class="form-group">
+                  <label for="e-local-conveyance">Local Conveyance</label>
+                  <input type="number" class="form-control" id="e-local-conveyance" placeholder="Enter local conveyance">
+                </div>
+                  <div class="form-group">
+                    <label for="e-approver">Approver</label>
+                    <select id="e-approver" class="select-2 form-control form-control-user" name="approver">
+                      </select>
+                  </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-warning" onclick="onClickBtnEditSaveAsDraft()" type="button" id="btn-save-draft" href="#">Save as Draft</button>
+          <a class="btn btn-primary" onclick="onClickBtnEditSaveAsSubmit()" id="btn-submit" href="#">Submit for Approval</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" id="btn-logout" href="/login">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/static/js/jquery.min.js"></script>
+
+  <script type="text/javascript">
+    $(".wrapper").hide();
+    $(document).ready(function() {
+      $( ".progress-container" ).hide();
+      $( ".wrapper" ).show();
+      $('.status-select-2').select2();
+      $('.select-2').select2();
+    });
+  </script>
+
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/static/js/jquery.easing.min.js"></script>
+  <script src="/static/js/js.cookie.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/static/js/main.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="/static/js/jquery.dataTables.min.js"></script>
+  <script src="/static/js/dataTables.bootstrap4.min.js"></script>
+
+  <script src="/static/js/select2.min.js"></script>
+
+  <script src="/static/js/constants.js"></script>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+        if(Cookies.get("travel-portal-token") != undefined){
+          if(Cookies.get("travel-portal-role") == "employee"){
+            
+          }else if(Cookies.get("travel-portal-role") == "manager"){
+            window.location = "/manager/travels";
+          }else if(Cookies.get("travel-portal-role") == "finance_manager"){
+            window.location = "/finance/travels";
+          }else if(Cookies.get("travel-portal-role") == "administrator"){
+            window.location = "/administrator/dashboard";
+          }else{
+            window.location = "/login";
+          }
+        }else{
+          window.location = "/login";
+        }
+
+
+        $('#tp-list-loader').hide();
+        $('#tp-list').removeClass('ld-over running');
+
+
+        $( ".progress-container" ).hide();
+        $( ".container" ).show();
+
+      });
+
+      var tp_list_table = $('#tp-list-table').DataTable();
+      function onClickBtnAdd(t){
+          fetchApprovers('add');
+      }
+
+      function fetchApprovers(where){
+        $('#tp-list-loader').show();
+        $('#tp-list').addClass('ld-over running');
+        $.ajax(
+              {
+                  url: base_url + 'api/users/roles/manager',
+                  type: 'get',
+                  contentType: 'application/json',
+                  headers: {
+                    'Authorization': 'Bearer ' + Cookies.get("travel-portal-token")
+                  },
+                  success: function(data){
+                    if(data.status == "success"){
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+
+                        if (where == 'add'){
+
+                          $("#a-approver").html("");
+                          for(var i=0; i < data.meta.length; i++){
+                              console.log(data[i]);
+                              $('#a-approver').append($('<option>', {
+                                  value: data.meta[i].uid,
+                                  text: data.meta[i].first_name + ' ' + data.meta[i].last_name + '(' + data.meta[i].email + ')'
+                              }));
+                          }
+
+                        }
+                      }else{
+                        $("#a-approver").html("");
+                      }
+                      $('#addModal').modal('show');
+                  },
+                  error: function(data){
+                      $("#a-approver").html("");
+                      $("#e-approver").html("");
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+                      $('#addModal').modal('show');
+                  }
+            }
+        );
+      }
+
+      function onClickBtnAddSaveAsDraft(){
+          data = {
+            "description": $('#a-description').val() == "" ? null : $('#a-description').val(),
+            "start_date": $('#a-start-date').val() == "" ? null : $('#a-start-date').val(),
+            "end_date": $('#a-end-date').val() == "" ? null : $('#a-end-date').val(),
+            "mode": $('#a-mode').val() == "" ? null : $('#a-mode').val(),
+            "ticket_cost": $('#a-ticket-cost').val() == "" ? null : Number($('#a-ticket-cost').val()),
+            "home_airport_cost": $('#a-home-airport-cost').val() == "" ? null : Number($('#a-home-airport-cost').val()),
+            "destination_airport_cost": $('#a-dest-airport-cost').val() == "" ? null : Number($('#a-dest-airport-cost').val()),
+            "hotel_cost": $('#a-hotel-cost').val() == "" ? null : Number($('#a-hotel-cost').val()),
+            "local_conveyance": $('#a-local-conveyance').val() == "" ? null : Number($('#a-local-conveyance').val()),
+            "approver": $('#a-approver').val() == "" ? null : $('#a-approver').val()
+          };
+           
+          saveAdd(JSON.stringify(data), 'draft')
+      }
+
+      function onClickBtnAddSaveAsSubmit(){
+          data = {
+            "description": $('#a-description').val() == "" ? null : $('#a-description').val(),
+            "start_date": $('#a-start-date').val() == "" ? null : $('#a-start-date').val(),
+            "end_date": $('#a-end-date').val() == "" ? null : $('#a-end-date').val(),
+            "mode": $('#a-mode').val() == "" ? null : $('#a-mode').val(),
+            "ticket_cost": $('#a-ticket-cost').val() == "" ? null : Number($('#a-ticket-cost').val()),
+            "home_airport_cost": $('#a-home-airport-cost').val() == "" ? null : Number($('#a-home-airport-cost').val()),
+            "destination_airport_cost": $('#a-dest-airport-cost').val() == "" ? null : Number($('#a-dest-airport-cost').val()),
+            "hotel_cost": $('#a-hotel-cost').val() == "" ? null : Number($('#a-hotel-cost').val()),
+            "local_conveyance": $('#a-local-conveyance').val() == "" ? null : Number($('#a-local-conveyance').val()),
+            "approver": $('#a-approver').val() == "" ? null : $('#a-approver').val()
+          };
+           
+          saveAdd(JSON.stringify(data), 'submitted')
+      }
+
+      function saveAdd(data, status){
+        $('#tp-list-loader').show();
+        $('#tp-list').addClass('ld-over running');
+        $.ajax(
+              {
+                  url: base_url + 'api/employee/travels?for=' + status,
+                  type: 'post',
+                  contentType: 'application/json',
+                  headers: {
+                    'Authorization': 'Bearer ' + Cookies.get("travel-portal-token")
+                  },
+                  data: data,
+                  success: function(data){
+                    if(data.status == "success"){
+                      $("#add-message-notification").html("<div class=\"alert alert-danger\">" + data.message + "</div>");
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+
+                      getTravelList('');
+                      $("#a-form")[0].reset();
+                      $('#addModal').modal('toggle');
+                    }else{
+
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+                      $("#add-message-notification").html("<div class=\"alert alert-danger\">" + data.message + "</div>");
+                    }
+                  },
+                  error: function(data){
+                      console.log(data);
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+                      $("#add-message-notification").html("<div class=\"alert alert-danger\">Something wrong happened</div>");
+                  }
+            }
+        );
+      }
+
+      function onClickBtnEdit(t){
+        $("#e-form")[0].reset();
+        $('#tp-list-loader').show();
+        $('#tp-list').addClass('ld-over running');
+        $.ajax(
+              {
+                  url: base_url + 'api/users/roles/manager',
+                  type: 'get',
+                  contentType: 'application/json',
+                  headers: {
+                    'Authorization': 'Bearer ' + Cookies.get("travel-portal-token")
+                  },
+                  success: function(data){
+                    if(data.status == "success"){
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+
+
+                       $("#e-approver").html("");
+                       for(var i=0; i < data.meta.length; i++){
+                           $('#e-approver').append($('<option>', {
+                               value: data.meta[i].uid,
+                               text: data.meta[i].first_name + ' ' + data.meta[i].last_name + '(' + data.meta[i].email + ')'
+                           }));
+                       }
+
+                      }else{
+                        $("#e-approver").html("");
+                        $('#editModal').modal('toggle');
+                      }
+                      $('#e-id').val($(t).data('id'));
+                      $('#e-approver').val($(t).data('uid'));
+                      $('#e-description').val($(t).data('desc'));
+                      $('#e-mode').val($(t).data('mode'));
+                      $('#e-start-date').val($(t).data('start_date'));
+                      $('#e-end-date').val($(t).data('end_date'));
+                      $('#e-hotel-cost').val($(t).data('hotel_cost'));
+                      $('#e-dest-airport-cost').val($(t).data('d_airport_cost'));
+                      $('#e-home-airport-cost').val($(t).data('h_airport_cost'));
+                      $('#e-ticket-cost').val($(t).data('ticket_cost'));
+                      $('#e-local-conveyance').val($(t).data('l_conveyance'));
+                      $('#editModal').modal('show');
+                  },
+                  error: function(data){
+                      $("#e-approver").html("");
+                      $('#e-id').val($(t).data('id'));
+                      $('#e-approver').val($(t).data('uid'));
+                      $('#e-description').val($(t).data('desc'));
+                      $('#e-mode').val($(t).data('mode'));
+                      $('#e-start-date').val($(t).data('start_date'));
+                      $('#e-end-date').val($(t).data('end_date'));
+                      $('#e-hotel-cost').val($(t).data('hotel_cost'));
+                      $('#e-dest-airport-cost').val($(t).data('d_airport_cost'));
+                      $('#e-home-airport-cost').val($(t).data('h_airport_cost'));
+                      $('#e-ticket-cost').val($(t).data('ticket_cost'));
+                      $('#e-local-conveyance').val($(t).data('l_conveyance'));
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+                      $('#editModal').modal('show');
+                  }
+            }
+        );
+          $('#editModal').modal('show');
+      }
+
+      function onClickBtnEditSaveAsDraft(){
+          data = {
+            "description": $('#e-description').val() == "" ? null : $('#e-description').val(),
+            "start_date": $('#e-start-date').val() == "" ? null : $('#e-start-date').val(),
+            "end_date": $('#e-end-date').val() == "" ? null : $('#e-end-date').val(),
+            "mode": $('#e-mode').val() == "" ? null : $('#e-mode').val(),
+            "ticket_cost": $('#e-ticket-cost').val() == "" ? null : Number($('#e-ticket-cost').val()),
+            "home_airport_cost": $('#e-home-airport-cost').val() == "" ? null : Number($('#e-home-airport-cost').val()),
+            "destination_airport_cost": $('#e-dest-airport-cost').val() == "" ? null : Number($('#e-dest-airport-cost').val()),
+            "hotel_cost": $('#e-hotel-cost').val() == "" ? null : Number($('#e-hotel-cost').val()),
+            "local_conveyance": $('#e-local-conveyance').val() == "" ? null : Number($('#e-local-conveyance').val()),
+            "approver": $('#e-approver').val() == "" ? null : $('#e-approver').val()
+          };
+           
+          saveUpdate($('#e-id').val(), JSON.stringify(data), 'draft')
+          //$('#editModal').modal('toggle');
+      }
+
+      function onClickBtnEditSaveAsSubmit(){
+          data = {
+            "description": $('#e-description').val() == "" ? null : $('#e-description').val(),
+            "start_date": $('#e-start-date').val() == "" ? null : $('#e-start-date').val(),
+            "end_date": $('#e-end-date').val() == "" ? null : $('#e-end-date').val(),
+            "mode": $('#e-mode').val() == "" ? null : $('#e-mode').val(),
+            "ticket_cost": $('#e-ticket-cost').val() == "" ? null : Number($('#e-ticket-cost').val()),
+            "home_airport_cost": $('#e-home-airport-cost').val() == "" ? null : Number($('#e-home-airport-cost').val()),
+            "destination_airport_cost": $('#e-dest-airport-cost').val() == "" ? null : Number($('#e-dest-airport-cost').val()),
+            "hotel_cost": $('#e-hotel-cost').val() == "" ? null : Number($('#e-hotel-cost').val()),
+            "local_conveyance": $('#e-local-conveyance').val() == "" ? null : Number($('#e-local-conveyance').val()),
+            "approver": $('#e-approver').val() == "" ? null : $('#e-approver').val()
+          };
+           
+          saveUpdate($('#e-id').val(), JSON.stringify(data), 'submitted')
+          //$('#editModal').modal('toggle');
+      }
+
+      function saveUpdate(id, data, status){
+        $('#tp-list-loader').show();
+        $('#tp-list').addClass('ld-over running');
+        $.ajax(
+              {
+                  url: base_url + 'api/employee/travels/' + id +'?for=' + status,
+                  type: 'put',
+                  contentType: 'application/json',
+                  headers: {
+                    'Authorization': 'Bearer ' + Cookies.get("travel-portal-token")
+                  },
+                  data: data,
+                  success: function(data){
+                    if(data.status == "success"){
+                      $("#edit-message-notification").html("<div class=\"alert alert-success\">" + data.message + "</div>");
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+
+                      getTravelList('');
+                      $('#editModal').modal('toggle');
+                    }else{
+
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+                      $("#edit-message-notification").html("<div class=\"alert alert-danger\">" + data.message + "</div>");
+                    }
+                  },
+                  error: function(data){
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+                      $("#edit-message-notification").html("<div class=\"alert alert-danger\">Something wrong happened</div>");
+                  }
+            }
+        );
+      }
+
+      function getTravelList(status){
+	    tp_list_table.clear().draw();
+        $('#tp-list-loader').show();
+        $('#tp-list').addClass('ld-over running');
+        $.ajax(
+              {
+                  url: base_url + 'api/employee/travels',
+                  type: 'get',
+                  contentType: 'application/json',
+                  headers: {
+                    'Authorization': 'Bearer ' + Cookies.get("travel-portal-token")
+                  },
+                  data: {
+                    'status': status,
+                  },
+                  success: function(data){
+                    if(data.status == "success"){
+                      for(i = 0; i < data.meta.length; i++){
+                          var edit_btn = '';
+                          if (data.meta[i].ta_status == 'draft') {
+                            edit_btn = '<button onclick="onClickBtnEdit(this)" type="button" data-id="' + data.meta[i].t_id +'" data-uid="' + data.meta[i].u_id + '" data-desc="' + data.meta[i].t_description +'" data-start_date="' + formatDate(data.meta[i].t_start_date) +'" data-end_date="' + formatDate(data.meta[i].t_end_date) +'" data-hotel_cost="' + data.meta[i].t_hotel_cost +'" data-d_airport_cost="' + data.meta[i].t_destination_airport_cost +'" data-h_airport_cost="' + data.meta[i].t_home_airport_cost +'" data-ticket_cost="' + data.meta[i].t_ticket_cost +'" data-mode="' + data.meta[i].t_mode +'" data-l_conveyance="' + data.meta[i].t_local_conveyance +'" class="btn btn-warning btn-edit">Edit</button>';
+                          }
+
+                          var txt_status = '';
+                          start_date = new Date(data.meta[i].t_start_date);
+                          end_date = new Date(data.meta[i].t_end_date);
+                        tp_list_table.row.add([
+                          data.meta[i].t_created,
+                          data.meta[i].t_description,
+                          formatDate(data.meta[i].t_start_date) + ' - ' + formatDate(data.meta[i].t_end_date),
+                          data.meta[i].t_mode,
+                          number_format(data.meta[i].t_ticket_cost),
+                          number_format(data.meta[i].t_home_airport_cost),
+                          number_format(data.meta[i].t_destination_airport_cost),
+                          number_format(data.meta[i].t_hotel_cost),
+                          number_format(data.meta[i].t_local_conveyance),
+                          data.meta[i].u_first_name + ' ' + data.meta[i].u_last_name,
+                          data.meta[i].ta_status + '(' + data.meta[i].u_role.replace('_', ' ') + ')',
+                          edit_btn,
+                        ]).draw();
+                      }
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+
+                    }else{
+
+                      $("#tp-list-tbody").html("");
+
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+                    }
+                  },
+                  error: function(data){
+                      $("#tp-list-tbody").html("");
+
+                      $('#tp-list-loader').hide();
+                      $('#tp-list').removeClass('ld-over running');
+                  }
+            }
+        );
+      }
+
+      function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+      
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+      
+        return [year, month, day].join('-');
+      }
+      
+      function number_format(number, decimals, dec_point, thousands_sep) {
+        // *     example: number_format(1234.56, 2, ',', ' ');
+        // *     return: '1 234,56'
+        number = (number + '').replace(',', '').replace(' ', '');
+        var n = !isFinite(+number) ? 0 : +number,
+          prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+          sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+          dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+          s = '',
+          toFixedFix = function(n, prec) {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+          };
+        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+        if (s[0].length > 3) {
+          s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        }
+        if ((s[1] || '').length < prec) {
+          s[1] = s[1] || '';
+          s[1] += new Array(prec - s[1].length + 1).join('0');
+        }
+        return s.join(dec);
+      }
+      
+      $("#logout").on("click", function(e){
+          $( ".progress-container" ).show();
+          $( ".wrapper" ).hide();
+          window.location = "/login";
+      });
+
+      
+      $("#btn-add-new").on("click", function(e){
+          e.preventDefault();
+
+          fetchApprovers('add');
+          //$('#addModal').modal('show');
+
+      });
+      
+      
+      $("#btn-filter").on("click", function(e){
+          e.preventDefault();
+
+          getTravelList($('#filter-status').val());
+
+      });
+
+
+
+      getTravelList('');
+
+  </script>
+
+</body>
+
+</html>

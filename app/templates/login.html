@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Simple Travel Portal - Login</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="/static/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="/static/css/main.css" rel="stylesheet">
+  <link href="/static/css/progress.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+  <div class="progress-container">
+
+  	<svg class="loader" xmlns="h#ttp://www.w3.org/2000/svg" viewBox="0 0 340 340">
+  		 <circle cx="170" cy="170" r="160" stroke="#E2007C"/>
+  		 <circle cx="170" cy="170" r="135" stroke="#404041"/>
+  		 <circle cx="170" cy="170" r="110" stroke="#E2007C"/>
+  		 <circle cx="170" cy="170" r="85" stroke="#404041"/>
+  	</svg>
+
+  </div>
+
+  <div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-5 col-lg-8 col-md-6">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <!-- <div class="col-lg-6 d-none d-lg-block bg-login-image"></div> -->
+              <div class="col-lg-12">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Simple Travel Portal</h1>
+                  </div>
+                  <div id="message-notification">
+
+                  </div>
+                  <form class="user">
+                    <div class="form-group">
+                      <input type="email" class="form-control form-control-user" id="input-email" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control form-control-user" id="input-password" placeholder="Password">
+                    </div>
+                    <a href="/login" id="btn-signin" class="btn btn-primary btn-user btn-block">
+                      Login
+                    </a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/static/js/jquery.min.js"></script>
+
+  <script type="text/javascript">
+    $(".container").hide();
+  </script>
+
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/static/js/jquery.easing.min.js"></script>
+  <script src="/static/js/js.cookie.min.js"></script>
+  <script src="/static/js/js.cookie.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/static/js/main.min.js"></script>
+
+  <script src="/static/js/constants.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+        Cookies.remove("travel-portal-token", { path: '/', domain: window.location.hostname });
+        Cookies.remove("travel-portal-uid", { path: '/', domain: window.location.hostname });
+        Cookies.remove("travel-portal-role", { path: '/', domain: window.location.hostname });
+
+        $( ".progress-container" ).hide();
+        $( ".container" ).show();
+      });
+      var login_in_url = base_url + 'api/users/login';
+      $(function(){
+
+          $('#btn-signin').click(function(e){
+              $( ".progress-container" ).show();
+              $( ".container" ).hide();
+              e.preventDefault();
+              login();
+          });
+
+          function login(){
+              var username = $("#input-email").val();
+              var password = $("#input-password").val();
+
+              var data = JSON.stringify({
+                  email: username,
+                  password: password
+              });
+              $.ajax(
+                  {
+                      url: login_in_url,
+                      type: 'post',
+                      contentType: 'application/json',
+                      data: data,
+                      success: function(data){
+                        if(data.status == "success"){
+                            console.log(data);
+                          $( ".progress-container" ).hide();
+                          $( ".container" ).show();
+                          $("#message-notification").html("<div class=\"alert alert-success\">" + data.message + "</div>");
+                          Cookies.set("travel-portal-token", data.meta.token);
+                          Cookies.set("travel-portal-uid", data.meta.uid);
+                          Cookies.set("travel-portal-role", data.meta.role);
+                          Cookies.set("travel-portal-first-name", data.meta.first_name);
+                          Cookies.set("travel-portal-last-name", data.meta.last_name);
+                          //redirect depends on the role
+                          if(data.meta.role == 'employee'){
+                            window.location = "/employee/travels";
+                          }else if(data.meta.role == 'manager'){
+                            window.location = "/manager/travels";
+                          }else if(data.meta.role == 'finance_manager'){
+                            window.location = "/finance/travels";
+                          }else if(data.meta.role == 'administrator'){
+                            window.location = "/administrator/dashboard";
+                          }
+                        }else{
+                          $( ".progress-container" ).hide();
+                          $( ".container" ).show();
+                          $("#message-notification").html("<div class=\"alert alert-danger\">" + data.message + "</div>");
+                        }
+                      },
+                      error: function(data){
+                          $( ".progress-container" ).hide();
+                          $( ".container" ).show();
+                          $("#message-notification").html("<div class=\"alert alert-danger\">" + data.responseJSON.message + "</div>");
+                      }
+                }
+            );
+        }
+
+      });
+  </script>
+
+</body>
+
+</html>
