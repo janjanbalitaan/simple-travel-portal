@@ -46,7 +46,7 @@ def user_login():
             ):
         ru.http_conflict(message="Failed to create a user token")
 
-    return ru.http_success(meta={'uid': user.uid, 'token': token, 'role': role_values_reverse.get(user.role)})
+    return ru.http_success(meta={'uid': user.uid, 'token': token, 'role': role_values_reverse.get(user.role), 'first_name': user.first_name, 'last_name': user.last_name})
 
 
 @app.route('/api/admin/users/registration', methods=['POST'])
