@@ -466,7 +466,7 @@ def get_users_by_roles(role):
     if user.is_employee and role == 'manager':
         meta = []
         for row in User.find_by_role(role_values.get(role)):
-            meta.append({"email": row.email, "uid": row.uid})
+            meta.append({"first_name": row.first_name, "last_name": row.last_name, "email": row.email, "uid": row.uid})
         return ru.http_success(message="Successful fetching of data", meta=meta)
 
     
