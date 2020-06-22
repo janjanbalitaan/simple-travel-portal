@@ -497,16 +497,20 @@ def get_travel_manager_record():
             for travel in travels:
                 query = db.session.query(TravelApproval, User).join(User, TravelApproval.approver == User.id, isouter=True).filter(travel.id==TravelApproval.travel)
             
+                sub = db.session.query(TravelApproval.status).filter(TravelApproval.travel==travel.id).order_by(desc(TravelApproval.id)).limit(1)
                 if status_values.get(request.args.get('status')) is not None:
-                    sub = db.session.query(TravelApproval.status).filter(TravelApproval.travel==travel.id).order_by(desc(TravelApproval.id)).limit(1)
 
-                    query = query.filter(TravelApproval.status==sub, TravelApproval.status==status_values.get(request.args.get('status')))
+                    query = query.filter(TravelApproval.status==sub, TravelApproval.status==status_values.get(request.args.get('status')), TravelApproval.status != 0)
+                else:
+                    query = query.filter(TravelApproval.status==sub, TravelApproval.status.in_([1,2,3]))
+
 
                 query = query.order_by(desc(TravelApproval.id)).limit(1)
                 
 
                 for row in query.all():
-                    print(row)
+                    o = User.find_by_id(travel.owner)
+                    s = User.find_by_id(row[0].sender)
                     a = row[0]
                     u = row[1]
 
@@ -533,7 +537,12 @@ def get_travel_manager_record():
                             'u_email': u.email,
                             'u_first_name': u.first_name,
                             'u_last_name': u.last_name,
-                            'u_role': role_values_reverse.get(u.role)
+                            'u_role': role_values_reverse.get(u.role),
+                            'o_first_name': o.first_name,
+                            'o_last_name': o.last_name,
+                            's_id': s.uid,
+                            's_first_name': s.first_name,
+                            's_last_name': s.last_name,
                             })
                     else:
                         meta.append({
@@ -555,6 +564,11 @@ def get_travel_manager_record():
                             'u_first_name': None,
                             'u_last_name': None,
                             'u_role': None,
+                            'o_first_name': o.first_name,
+                            'o_last_name': o.last_name,
+                            's_id': s.uid,
+                            's_first_name': s.first_name,
+                            's_last_name': s.last_name,
                             })
 
 
