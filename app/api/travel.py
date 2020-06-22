@@ -62,6 +62,9 @@ def create_travel_record():
             if not (type(request.get_json().get('ticket_cost')) == int or type(request.get_json().get('ticket_cost')) == float):
                 return ru.http_bad_gateway(message="Ticket cost must be numeric")
 
+            if request.get_json().get('ticket_cost') < 0:
+                return ru.http_bad_gateway(message="Ticket cost must greater than or equal to 0")
+
     if 'home_airport_cost' not in request.get_json():
         return ru.http_bad_gateway(message="Home airport cost is required in the request")
     else:
@@ -71,6 +74,9 @@ def create_travel_record():
             if not (type(request.get_json().get('home_airport_cost')) == int or type(request.get_json().get('home_airport_cost')) == float):
                 return ru.http_bad_gateway(message="Home airport cost must be numeric")
 
+            if request.get_json().get('home_airport_cost') < 0:
+                return ru.http_bad_gateway(message="Home cost must greater than or equal to 0")
+
     if 'destination_airport_cost' not in request.get_json():
         return ru.http_bad_gateway(message="Destination airport cost is required in the request")
     else:
@@ -79,6 +85,10 @@ def create_travel_record():
         else:
             if not (type(request.get_json().get('destination_airport_cost')) == int or type(request.get_json().get('destination_airport_cost')) == float):
                 return ru.http_bad_gateway(message="Destination aiport cost must be numeric")
+            
+            if request.get_json().get('destination_airport_cost') < 0:
+                return ru.http_bad_gateway(message="Home cost must greater than or equal to 0")
+
 
     if 'hotel_cost' not in request.get_json():
         return ru.http_bad_gateway(message="Hotel cost is required in the request")
@@ -88,6 +98,10 @@ def create_travel_record():
         else:
             if not (type(request.get_json().get('hotel_cost')) == int or type(request.get_json().get('hotel_cost')) == float):
                 return ru.http_bad_gateway(message="Hotel cost must be numeric")
+            
+            if request.get_json().get('hotel_cost') < 0:
+                return ru.http_bad_gateway(message="Hotel cost must greater than or equal to 0")
+
 
     if 'local_conveyance' not in request.get_json():
         return ru.http_bad_gateway(message="Local conveyance is required in the request")
@@ -97,6 +111,10 @@ def create_travel_record():
         else:
             if not (type(request.get_json().get('local_conveyance')) == int or type(request.get_json().get('local_conveyance')) == float):
                 return ru.http_bad_gateway(message="Local conveyance cost must be numeric")
+            
+            if request.get_json().get('local_conveyance') < 0:
+                return ru.http_bad_gateway(message="Local conveyance must greater than or equal to 0")
+
     
     manager_id = None
     if 'approver' not in request.get_json():
@@ -209,6 +227,10 @@ def update_travel_record(id):
         else:
             if not (type(request.get_json().get('ticket_cost')) == int or type(request.get_json().get('ticket_cost')) == float):
                 return ru.http_bad_gateway(message="Ticket cost must be numeric")
+            
+            if request.get_json().get('ticket_cost') < 0:
+                return ru.http_bad_gateway(message="Ticket cost must greater than or equal to 0")
+
 
     if 'home_airport_cost' not in request.get_json():
         return ru.http_bad_gateway(message="Home airport cost is required in the request")
@@ -218,6 +240,10 @@ def update_travel_record(id):
         else:
             if not (type(request.get_json().get('home_airport_cost')) == int or type(request.get_json().get('home_airport_cost')) == float):
                 return ru.http_bad_gateway(message="Home airport cost must be numeric")
+            
+            if request.get_json().get('home_airport_cost') < 0:
+                return ru.http_bad_gateway(message="Home airport cost must greater than or equal to 0")
+
 
     if 'destination_airport_cost' not in request.get_json():
         return ru.http_bad_gateway(message="Destination airport cost is required in the request")
@@ -227,6 +253,10 @@ def update_travel_record(id):
         else:
             if not (type(request.get_json().get('destination_airport_cost')) == int or type(request.get_json().get('destination_airport_cost')) == float):
                 return ru.http_bad_gateway(message="Destination aiport cost must be numeric")
+            
+            if request.get_json().get('destination_airport_cost') < 0:
+                return ru.http_bad_gateway(message="Destination airport cost must greater than or equal to 0")
+
 
     if 'hotel_cost' not in request.get_json():
         return ru.http_bad_gateway(message="Hotel cost is required in the request")
@@ -236,6 +266,10 @@ def update_travel_record(id):
         else:
             if not (type(request.get_json().get('hotel_cost')) == int or type(request.get_json().get('hotel_cost')) == float):
                 return ru.http_bad_gateway(message="Hotel cost must be numeric")
+            
+            if request.get_json().get('hotel_cost') < 0:
+                return ru.http_bad_gateway(message="Hotel cost must greater than or equal to 0")
+
 
     if 'local_conveyance' not in request.get_json():
         return ru.http_bad_gateway(message="Local conveyance is required in the request")
@@ -245,6 +279,10 @@ def update_travel_record(id):
         else:
             if not (type(request.get_json().get('local_conveyance')) == int or type(request.get_json().get('local_conveyance')) == float):
                 return ru.http_bad_gateway(message="Local conveyance cost must be numeric")
+            
+            if request.get_json().get('local_conveyance') < 0:
+                return ru.http_bad_gateway(message="Local conveyance must greater than or equal to 0")
+
     
     manager_id = None
     if 'approver' not in request.get_json():
@@ -289,18 +327,9 @@ def update_travel_record(id):
             return ru.http_conflict(message="Manager must be required when submitting for approval")
 
     if user.is_employee:
-        sub = db.session.query(
-                TravelApproval.id.label('ta_id'),
-                TravelApproval.created.label('ta_created'),
-                TravelApproval.deleted.label('ta_deleted'),
-                TravelApproval.modified.label('ta_modified'),
-                TravelApproval.travel.label('ta_travel'),
-                TravelApproval.sender.label('ta_sender'),
-                TravelApproval.approver.label('ta_approver'),
-                TravelApproval.status.label('ta_status'),
-                ).filter(TravelApproval.travel==id).order_by(desc(TravelApproval.id)).limit(1).subquery()
+        sub = db.session.query(TravelApproval.id).filter(TravelApproval.travel==id).order_by(desc(TravelApproval.id)).limit(1)
 
-        query = db.session.query(Travel, TravelApproval).join(sub, sub.c.ta_travel == Travel.id, isouter=False).join(User, sub.c.ta_approver == User.id, isouter=True).filter(Travel.owner==user.id, Travel.id==id).first()
+        query = db.session.query(Travel, TravelApproval).join(TravelApproval, TravelApproval.travel == Travel.id, isouter=False).join(User, TravelApproval.approver == User.id, isouter=True).filter(Travel.owner==user.id, Travel.id==id, TravelApproval.id == sub).first()
 
         print(query)
 
